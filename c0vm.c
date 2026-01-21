@@ -105,6 +105,7 @@ int execute(struct bc0_file *bc0) {
 IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
       // Free everything before returning from the execute function!
       c0v_stack_free(S);
+      free(V);
       return retval;
     }
 
@@ -301,6 +302,7 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
     case ACONST_NULL: {
       pc++;
       c0v_push(S, ptr2val(NULL));
+      break;
     }
 
 
@@ -355,19 +357,141 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
       break;
     }
 
-    case IF_CMPEQ:
+    case IF_CMPEQ: {
+      pc++;
+      ASSERT(!c0v_stack_empty(S));
+      c0_value v1 = c0v_pop(S);
+      ASSERT(!c0v_stack_empty(S));
+      c0_value v2 = c0v_pop(S);
+      int16_t c1 = (int16_t)P[pc];
+      pc++;
+      int16_t c2 = (int16_t)P[pc];
+      int16_t c3 = (c1<<8) | c2 ;
+      if (val_equal(v1, v2))
+      {
+        pc = pc + c3 - 2;
+      } else {
+        pc++;
+      }
+      break;
+      
+    }
+    
+    case IF_CMPNE: {
+      pc++;
+      ASSERT(!c0v_stack_empty(S));
+      c0_value v1 = c0v_pop(S);
+      ASSERT(!c0v_stack_empty(S));
+      c0_value v2 = c0v_pop(S);
+      int16_t c1 = (int16_t)P[pc];
+      pc++;
+      int16_t c2 = (int16_t)P[pc];
+      int16_t c3 = (c1<<8) | c2 ;
+      if (!val_equal(v1, v2))
+      {
+        pc = pc + c3 - 2;
+      } else {
+        pc++;
+      }
+      break;
+      
+    }
+    
+    case IF_ICMPLT: {
+      pc++;
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v1 = val2int(c0v_pop(S));
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v2 = val2int(c0v_pop(S));
+      int16_t c1 = (int16_t)P[pc];
+      pc++;
+      int16_t c2 = (int16_t)P[pc];
+      int16_t c3 = (c1<<8) | c2 ;
+      if (v2 < v1)
+      {
+        pc = pc + c3 - 2;
+      } else {
+        pc++;
+      }
+      break;
+      
+    }
+    
+    case IF_ICMPGE: {
+      pc++;
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v1 = val2int(c0v_pop(S));
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v2 = val2int(c0v_pop(S));
+      int16_t c1 = (int16_t)P[pc];
+      pc++;
+      int16_t c2 = (int16_t)P[pc];
+      int16_t c3 = (c1<<8) | c2 ;
+      if (v2 >= v1)
+      {
+        pc = pc + c3 - 2;
+      } else {
+        pc++;
+      }
+      break;
+      
+    }
+    
+    case IF_ICMPGT: {
+      pc++;
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v1 = val2int(c0v_pop(S));
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v2 = val2int(c0v_pop(S));
+      int16_t c1 = (int16_t)P[pc];
+      pc++;
+      int16_t c2 = (int16_t)P[pc];
+      int16_t c3 = (c1<<8) | c2 ;
+      if (v2 > v1)
+      {
+        pc = pc + c3 - 2;
+      } else {
+        pc++;
+      }
+      break;
+      
+    }
+    
+    case IF_ICMPLE: {
+      pc++;
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v1 = val2int(c0v_pop(S));
+      ASSERT(!c0v_stack_empty(S));
+      int32_t v2 = val2int(c0v_pop(S));
+      int16_t c1 = (int16_t)P[pc];
+      pc++;
+      int16_t c2 = (int16_t)P[pc];
+      int16_t c3 = (c1<<8) | c2 ;
+      if (v2 <= v1)
+      {
+        pc = pc + c3 - 2;
+      } else {
+        pc++;
+      }
+      break;
+      
+    }
+    
+    case GOTO: {
+      pc++;
+      // ASSERT(!c0v_stack_empty(S));
+      // int32_t v1 = val2int(c0v_pop(S));
+      // ASSERT(!c0v_stack_empty(S));
+      // int32_t v2 = val2int(c0v_pop(S));
+      int16_t c1 = (int16_t)P[pc];
+      pc++;
+      int16_t c2 = (int16_t)P[pc];
+      int16_t c3 = (c1<<8) | c2 ;
+      pc = pc + c3 - 2;
+     
+      break;
 
-    case IF_CMPNE:
-
-    case IF_ICMPLT:
-
-    case IF_ICMPGE:
-
-    case IF_ICMPGT:
-
-    case IF_ICMPLE:
-
-    case GOTO:
+    }
 
 
     /* Function call operations: */
