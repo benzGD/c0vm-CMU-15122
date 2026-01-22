@@ -138,7 +138,7 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
       return retval;
 
 
-      
+
     }
 
 
@@ -536,21 +536,31 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
       uint16_t index = (c1 << 8) | c2;
 
       //creating a local array for function g
+    
 
       uint8_t Vg_num_args = bc0->function_pool[index].num_args;
-      c0_value *Vg = xcalloc(Vg_num_args, sizeof(c0_value));
       uint8_t Vg_num_vars = bc0->function_pool[index].num_vars;
-      for (uint8_t i = 0; i < Vg_num_args ; i++)
+      c0_value *Vg = xcalloc(Vg_num_vars, sizeof(c0_value));
+
+
+      for (int8_t i = Vg_num_args -1; i >= 0 ; i--)
       {
-        Vg[Vg_num_vars - 1 - Vg_num_args -1 - i] = c0v_pop(S);
+
+        assert(i >= 0);
+        Vg[i] = c0v_pop(S);
         //populating the local variable array for g()
       }
+
+
+
+      pc++;  //increment pc to point to the next instruction
+      //when g() returns
 
       //create a new frame struct pointer
       frame* Frm = xcalloc(1, sizeof(frame));
       Frm->S = S;
       Frm->P = P;
-      Frm->pc = pc++;
+      Frm->pc = pc;
       Frm->V = V;
       push(callStack, (void*)Frm);
 
@@ -566,14 +576,38 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
       V = Vg ; //old V becomes new Vg
 
 
-
-
       break;
-
 
     }
 
-    case INVOKENATIVE:
+    case INVOKENATIVE: {
+      pc++;
+      uint16_t c1 = (uint16_t)P[pc];
+      pc++;
+      uint16_t c2 = (uint16_t)P[pc];
+      uint16_t index = (c1 << 8) | c2;
+
+
+
+      uint16_t Vg_num_args = bc0->native_pool[index].num_args;
+      uint16_t indx = bc0->native_pool[index].function_table_index;
+
+      c0_value *Vg = xcalloc(Vg_num_args, sizeof(c0_value));
+      for (uint16_t i = 0; i < Vg_num_args ; i++)
+      {
+        Vg[Vg_num_args -1 - i] = c0v_pop(S);
+        //populating the local variable array for g()
+      }
+
+      c0v_push(S, (*native_function_table[indx])(Vg));
+
+      free(Vg);
+
+      pc++;
+
+      break;
+
+    }
 
 
 
