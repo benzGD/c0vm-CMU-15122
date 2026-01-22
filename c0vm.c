@@ -49,7 +49,7 @@ int execute(struct bc0_file *bc0) {
 
   /* The call stack, a generic stack that should contain pointers to frames */
   /* You won't need this until you implement functions. */
-  gstack_t callStack;
+  gstack_t callStack = stack_new();
   (void) callStack; // silences compilation errors about callStack being currently unused
 
   while (true) {
@@ -106,7 +106,39 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
       // Free everything before returning from the execute function!
       c0v_stack_free(S);
       free(V);
+
+      //check if the callstack is not empty
+
+      if (!stack_empty(callStack))
+      {
+
+        //restore the contents for f()
+
+        frame* f = (frame*)pop(callStack);
+        S = f->S;
+        c0v_push(S, int2val(retval));
+        P = f->P;
+        pc = f->pc;
+        V = f->V;
+
+
+        free(f);
+        break;
+
+
+
+
+      }
+
+
+      //if the callStack is empty means we can
+      //safely return 
+
+      stack_free(callStack, NULL);
       return retval;
+
+
+      
     }
 
 
@@ -496,9 +528,53 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
 
     /* Function call operations: */
 
-    case INVOKESTATIC:
+    case INVOKESTATIC: {
+      pc++;
+      uint16_t c1 = (uint16_t)P[pc];
+      pc++;
+      uint16_t c2 = (uint16_t)P[pc];
+      uint16_t index = (c1 << 8) | c2;
+
+      //creating a local array for function g
+
+      uint8_t Vg_num_args = bc0->function_pool[index].num_args;
+      c0_value *Vg = xcalloc(Vg_num_args, sizeof(c0_value));
+      uint8_t Vg_num_vars = bc0->function_pool[index].num_vars;
+      for (uint8_t i = 0; i < Vg_num_args ; i++)
+      {
+        Vg[Vg_num_vars - 1 - Vg_num_args -1 - i] = c0v_pop(S);
+        //populating the local variable array for g()
+      }
+
+      //create a new frame struct pointer
+      frame* Frm = xcalloc(1, sizeof(frame));
+      Frm->S = S;
+      Frm->P = P;
+      Frm->pc = pc++;
+      Frm->V = V;
+      push(callStack, (void*)Frm);
+
+      //save all the info of f() here and push
+      //it into the global callStack
+      //---------------------------------
+
+
+      //----- adjust P and pc to the new function g
+      S = c0v_stack_new();  // new(empty stack) for g
+      P = bc0->function_pool[index].code; //P now counts to the code of g()
+      pc = 0;  //reset the pc (relative pc)
+      V = Vg ; //old V becomes new Vg
+
+
+
+
+      break;
+
+
+    }
 
     case INVOKENATIVE:
+
 
 
     /* Memory allocation and access operations: */
