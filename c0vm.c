@@ -80,12 +80,9 @@ int execute(struct bc0_file *bc0) {
       c0_value v1 = c0v_pop(S);
       ASSERT(!c0v_stack_empty(S));
       c0_value v2 = c0v_pop(S);
-
       c0v_push(S, v1);
       c0v_push(S, v2);
-      
       break;
-
     }
 
 
@@ -115,14 +112,8 @@ int execute(struct bc0_file *bc0) {
         P = f->P;
         pc = f->pc;
         V = f->V;
-        
-        
         free(f);
         break;
-        
-        
-        
-        
       }
       
       
@@ -146,7 +137,6 @@ int execute(struct bc0_file *bc0) {
       int32_t v1 = val2int(c0v_pop(S));
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
-
       push_int(S, (int32_t)((uint32_t)v1 +  (uint32_t)v2 ));
       break;
     }
@@ -157,7 +147,6 @@ int execute(struct bc0_file *bc0) {
       int32_t v1 = val2int(c0v_pop(S));
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
-  
       push_int(S, (int32_t)((uint32_t)v2 -  (uint32_t)v1 ));
       break;
     }
@@ -259,7 +248,6 @@ int execute(struct bc0_file *bc0) {
       {
         c0_arith_error("shifting error!");
       }
-      
       push_int(S,  (int32_t)((uint32_t)v2 >> (uint32_t)v1));
       break;
       
@@ -326,6 +314,7 @@ int execute(struct bc0_file *bc0) {
       pc++;
       c0v_push(S, ptr2val(NULL));
       break;
+
     }
 
 
@@ -378,6 +367,7 @@ int execute(struct bc0_file *bc0) {
     case NOP: {
       pc++;
       break;
+
     }
 
     case IF_CMPEQ: {
@@ -502,16 +492,11 @@ int execute(struct bc0_file *bc0) {
     
     case GOTO: {
       pc++;
-      // ASSERT(!c0v_stack_empty(S));
-      // int32_t v1 = val2int(c0v_pop(S));
-      // ASSERT(!c0v_stack_empty(S));
-      // int32_t v2 = val2int(c0v_pop(S));
       int16_t c1 = (int16_t)P[pc];
       pc++;
       int16_t c2 = (int16_t)P[pc];
       int16_t c3 = (c1<<8) | c2 ;
       pc = pc + c3 - 2;
-     
       break;
 
     }
@@ -527,8 +512,6 @@ int execute(struct bc0_file *bc0) {
       uint16_t index = (c1 << 8) | c2;
 
       //creating a local array for function g
-    
-
       uint8_t Vg_num_args = bc0->function_pool[index].num_args;
       uint8_t Vg_num_vars = bc0->function_pool[index].num_vars;
       c0_value *Vg = xcalloc(Vg_num_vars, sizeof(c0_value));
@@ -541,8 +524,6 @@ int execute(struct bc0_file *bc0) {
         Vg[i] = c0v_pop(S);
         //populating the local variable array for g()
       }
-
-
 
       pc++;  //increment pc to point to the next instruction
       //when g() returns
@@ -566,7 +547,6 @@ int execute(struct bc0_file *bc0) {
       pc = 0;  //reset the pc (relative pc)
       V = Vg ; //old V becomes new Vg
 
-
       break;
 
     }
@@ -577,8 +557,6 @@ int execute(struct bc0_file *bc0) {
       pc++;
       uint16_t c2 = (uint16_t)P[pc];
       uint16_t index = (c1 << 8) | c2;
-
-
 
       uint16_t Vg_num_args = bc0->native_pool[index].num_args;
       uint16_t indx = bc0->native_pool[index].function_table_index;
@@ -591,11 +569,8 @@ int execute(struct bc0_file *bc0) {
       }
 
       c0v_push(S, (*native_function_table[indx])(Vg));
-
       free(Vg);
-
       pc++;
-
       break;
 
     }
@@ -608,28 +583,25 @@ int execute(struct bc0_file *bc0) {
       pc++;
       uint8_t sz = P[pc]; //sz bytes of memory 
 
-
       //alocating sz bytes of intiizaled memory using
       //void pointers
-
       void* a = xcalloc(sz, sizeof(byte));
       c0v_push(S, ptr2val(a));
       pc++;
       break;
+
     }
     
     case IMLOAD: {
       pc++;
-
       int32_t* a = (int32_t*)val2ptr(c0v_pop(S));
       if (a == NULL)
       {
         c0_memory_error("NULL pointer!!!\n");
       }
-      
-      
       push_int(S, *a);
       break;
+
     }
     
     case IMSTORE: {
@@ -641,9 +613,7 @@ int execute(struct bc0_file *bc0) {
         c0_memory_error("NULL pointer!!!\n");
       }
       *a = x;
-      // c0v_push(S, ptr2val((void*)a));
       break;
-      
       
     }
     
@@ -671,7 +641,6 @@ int execute(struct bc0_file *bc0) {
       *aa = a;
       break;
       
-      
     }
     
     case CMLOAD: {
@@ -684,8 +653,6 @@ int execute(struct bc0_file *bc0) {
       }
       push_int(S,  (int32_t)*a);
       break;
-      
-      
       
     }
     
@@ -702,9 +669,6 @@ int execute(struct bc0_file *bc0) {
       *a = x & 0x7f;
       break;
       
-      
-      
-      
     }
     
     case AADDF: {
@@ -719,12 +683,10 @@ int execute(struct bc0_file *bc0) {
       }
       
       a = (uint8_t*)a + f;
-      
-      // a = a + f;
-      
       c0v_push(S, ptr2val(a));
       pc++;
       break;
+
     }
     
     
@@ -742,9 +704,6 @@ int execute(struct bc0_file *bc0) {
       uint8_t s = P[pc];  // elt_size
       
       //create a struct pointer to c0_array struct
-      
-      
-      
       c0_array* c0_Array_struct = xcalloc(1, sizeof(c0_array));
       
       c0_Array_struct->count = n;
@@ -753,55 +712,41 @@ int execute(struct bc0_file *bc0) {
       c0_Array_struct->elems = xcalloc(n , s);
       
       c0v_push(S, ptr2val((void*)c0_Array_struct));
-      
       pc++;
-      
       break;
     }
     
     case ARRAYLENGTH: {
       pc++;
-      
       c0_array* a = (c0_array*)val2ptr(c0v_pop(S));
       
       if (a == NULL)
       {
         c0_memory_error("NULL pointer!!!\n");
       }
-      
-      
       push_int(S,  a->count);
       break;
-      
       
     }
     
     case AADDS: {
       pc++;
-      
-      
       uint32_t i = (uint32_t)val2int(c0v_pop(S));
-      // if (i < 0)
-      // {
-      //   c0_memory_error("NULL pointer!!!\n");
-      // }
       c0_array* a = (c0_array*)val2ptr(c0v_pop(S));
       
       if (a == NULL)
       {
         c0_memory_error("NULL pointer!!!\n");
       }
-      
-      
+
       if (i >= a->count)
       {
         c0_memory_error("invalid access to the memoery outside the bounds of the array\n");
       }
-      
-      
+
       c0v_push(S, ptr2val((uint8_t*)a->elems + (i * a->elt_size )));
-      
       break;
+
     }
     
     
@@ -825,7 +770,6 @@ int execute(struct bc0_file *bc0) {
       }
       
       //if yes then push the same pointer stripped of its tag
-      
       c0v_push(S, ptr2val(a->p));
       pc++;
       break;
@@ -838,13 +782,6 @@ int execute(struct bc0_file *bc0) {
       pc++;
       uint16_t c2 = (uint16_t)P[pc];
       uint16_t tag = (c1<<8) | c2;
-
-
-
-      // void* a = val2ptr(c0v_pop(S));
-
-
-      
       c0_tagged_ptr* at = (c0_tagged_ptr*)val2tagged_ptr(c0v_pop(S));
       if (at== NULL)
       {
@@ -860,6 +797,7 @@ int execute(struct bc0_file *bc0) {
       }
       pc++;
       break;
+
     }
     
     case ADDTAG: {
@@ -888,8 +826,6 @@ int execute(struct bc0_file *bc0) {
       pc++;
       break;
 
-
-
     }
 
     case ADDROF_STATIC: {
@@ -901,14 +837,10 @@ int execute(struct bc0_file *bc0) {
       ASSERT(index < bc0->function_count);
 
       struct function_info *a = bc0->function_pool + index;
-
-
       c0v_push(S, ptr2val((void*)a));
 
       pc++;
       break;
-
-
 
     }
 
@@ -921,13 +853,9 @@ int execute(struct bc0_file *bc0) {
       ASSERT(index < bc0->function_count);
   
       struct native_info *a = bc0->native_pool + index;
-  
-  
       c0v_push(S, ptr2val((void*)a));
-  
       pc++;
       break;
-
 
     }
 
@@ -936,13 +864,9 @@ int execute(struct bc0_file *bc0) {
       struct function_info *a = (struct function_info*)(val2ptr(c0v_pop(S)));
 
       //creating a local array for function g
-    
-
       uint8_t Vg_num_args = a->num_args;
       uint8_t Vg_num_vars = a->num_vars;
       c0_value *Vg = xcalloc(Vg_num_vars, sizeof(c0_value));
-
-
 
       for (int8_t i = Vg_num_args -1; i >= 0 ; i--)
       {
@@ -964,9 +888,7 @@ int execute(struct bc0_file *bc0) {
       //it into the global callStack
       //---------------------------------
 
-
-
-
+      
       //----- adjust P and pc to the new function g
       S = c0v_stack_new();  // new(empty stack) for g
       P = a->code; //P now counts to the code of g()
