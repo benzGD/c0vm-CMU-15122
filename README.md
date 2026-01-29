@@ -19,10 +19,8 @@ The arithmetic instructions were trivial. The real challenge was **Task 4: Funct
 
 I had to manually implement the **Call Stack** logic that we usually take for granted:
 
-* **The Context Switch:** Implementing `invokestatic` meant I had to "freeze" the current function's world—snapshotting the Program Counter (`pc`), local variables (`V`), and operand stack (`S`) into a struct—before jumping to the new function.
-* **The Return:** The `return` instruction was even trickier. I had to pop the top frame, restore the caller's state exactly as it was, and physically move the return value from the "dead" function's stack to the "live" caller's stack.
-
-A single off-by-one error here usually caused the whole VM to segfault, so getting the memory management right for these frames was the most satisfying part of the project.
+* **The Context Switch:** Implementing `invokestatic` required saving the current function’s state before jumping to the callee. This meant storing the program counter (`pc`), local variables (`V`), and operand stack (`S`) inside a stack frame.
+* **The Return:** In the `return` instruction, the top frame had to be popped, the caller’s state restored exactly, and the return value moved from the callee’s stack back onto the caller’s operand stack.
 
 ## Quick Demo
 
