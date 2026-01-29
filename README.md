@@ -11,7 +11,7 @@ The driver code (`main.c`), the bytecode parser (`c0vm_main.c`), **all header fi
 ### Files included:
 * `c0vm.c`: The complete bytecode interpreter, including the Fetch-Decode-Execute cycle, stack management, and Native Function Interface (my implementation).
 * `c0vm`: Compiled binary for demonstration (Linux only).
-* `src/`: Contains the test cases. I've included both the **bytecode** (`.bc0`) and the **original source** (`.c0`) so you can verify exactly what the code is supposed to be doing.
+* `tests/`: Contains the test cases. I've included both the **bytecode** (`.bc0`) and the **original source** (`.c0`) so you can verify exactly what the code is supposed to be doing.
 
 ## Most Challenging / Interesting Part
 
