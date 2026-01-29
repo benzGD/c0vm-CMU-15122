@@ -33,10 +33,6 @@ void push_int(c0v_stack_t S, int32_t i) {
 
 
 
-
-
-
-
 int execute(struct bc0_file *bc0) {
   REQUIRES(bc0 != NULL);
 
@@ -99,44 +95,44 @@ int execute(struct bc0_file *bc0) {
      * need to revise it further when you write INVOKESTATIC. */
 
     case RETURN: {
-      int retval = val2int(c0v_pop(S));
+      
+      c0_value val = c0v_pop(S);
       assert(c0v_stack_empty(S));
-// Another way to print only in DEBUG mode
-IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
       // Free everything before returning from the execute function!
       c0v_stack_free(S);
       free(V);
-
+      
       //check if the callstack is not empty
-
+      
       if (!stack_empty(callStack))
       {
-
+        
         //restore the contents for f()
-
+        
         frame* f = (frame*)pop(callStack);
         S = f->S;
-        c0v_push(S, int2val(retval));
+        c0v_push(S, val);
         P = f->P;
         pc = f->pc;
         V = f->V;
-
-
+        
+        
         free(f);
         break;
-
-
-
-
+        
+        
+        
+        
       }
-
-
+      
+      
       //if the callStack is empty means we can
       //safely return 
-
+      
       stack_free(callStack, NULL);
-      return retval;
-
+      // Another way to print only in DEBUG mode
+      IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", val2int(val)));
+      return   val2int(val);
 
 
     }
@@ -613,30 +609,191 @@ IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", retval));
 
     /* Memory allocation and access operations: */
 
-    case NEW:
-
-    case IMLOAD:
-
-    case IMSTORE:
-
-    case AMLOAD:
-
-    case AMSTORE:
-
-    case CMLOAD:
-
-    case CMSTORE:
-
-    case AADDF:
+    case NEW: {
+      pc++;
+      uint8_t sz = P[pc]; //sz bytes of memory 
 
 
+      //alocating sz bytes of intiizaled memory using
+      //void pointers
+
+      void* a = xcalloc(sz, sizeof(byte));
+      c0v_push(S, ptr2val(a));
+      pc++;
+      break;
+    }
+    
+    case IMLOAD: {
+      pc++;
+
+      int32_t* a = (int32_t*)val2ptr(c0v_pop(S));
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      
+      
+      push_int(S, *a);
+      break;
+    }
+    
+    case IMSTORE: {
+      pc++;
+      int32_t x = val2int(c0v_pop(S));
+      int32_t* a = (int32_t*)val2ptr(c0v_pop(S));
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      *a = x;
+      // c0v_push(S, ptr2val((void*)a));
+      break;
+      
+      
+    }
+    
+    case AMLOAD: {
+      pc++;
+      int64_t** aa =  (int64_t**)val2ptr(c0v_pop(S));
+      if (aa == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      int64_t* a = *aa;
+      c0v_push(S, ptr2val((void*)a));
+      break;
+      
+    }
+    
+    case AMSTORE: {
+      pc++;
+      int64_t* a = (int64_t*)val2ptr(c0v_pop(S));
+      int64_t** aa =  (int64_t**)val2ptr(c0v_pop(S));
+      if (aa == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      *aa = a;
+      break;
+      
+      
+    }
+    
+    case CMLOAD: {
+      pc++;
+
+      char* a = (char*)val2ptr(c0v_pop(S));
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      push_int(S,  (int32_t)*a);
+      break;
+      
+      
+      
+    }
+    
+    case CMSTORE: {
+      pc++;
+      int32_t x = val2int(c0v_pop(S));
+      char* a = (char*)val2ptr(c0v_pop(S));
+
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      
+      *a = x & 0x7f;
+      break;
+      
+      
+      
+      
+    }
+    
+    case AADDF: {
+      pc++;
+      
+      uint8_t f = P[pc]; 
+      
+      void* a = (void*)val2ptr(c0v_pop(S));
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      
+      a = (uint8_t*)a + f;
+      
+      // a = a + f;
+      
+      c0v_push(S, ptr2val(a));
+      pc++;
+      break;
+    }
+    
+    
     /* Array operations: */
+    
+    case NEWARRAY: {
+      pc++;
+      
+      int32_t n =  val2int(c0v_pop(S)); //no of elements
+      if (n < 0)
+      {
+        c0_memory_error("n is negative!\n");
+      }
+      
+      uint8_t s = P[pc];  // elt_size
+      
+      //create a struct pointer to c0_array struct
+      
+      
+      
+      c0_array* c0_Array_struct = xcalloc(1, sizeof(c0_array));
+      
+      c0_Array_struct->count = n;
+      c0_Array_struct->elt_size = s;
+      
+      c0_Array_struct->elems = xcalloc(n , s);
+      
+      c0v_push(S, ptr2val((void*)c0_Array_struct));
+      
+      pc++;
+      
+      break;
+    }
+    
+    case ARRAYLENGTH: {
+      pc++;
+      
+      c0_array* a = (c0_array*)val2ptr(c0v_pop(S));
+      
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      
+      push_int(S,  a->count);
+      break;
+      
+      
+    }
+    
+    case AADDS: {
+      pc++;
+      
+      
+      int32_t n =  val2int(c0v_pop(S));
+      c0_array* a = (c0_array*)val2ptr(c0v_pop(S));
 
-    case NEWARRAY:
+      assert(a != NULL &&  0 <= n && n < a->count);
 
-    case ARRAYLENGTH:
 
-    case AADDS:
+      c0v_push(S, ptr2val(a->elems + (n * a->elt_size )));
+
+      break;
+    }
 
 
     /* BONUS -- C1 operations */
