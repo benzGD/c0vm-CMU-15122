@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
-
 #include "lib/xalloc.h"
 #include "lib/stack.h"
 #include "lib/contracts.h"
@@ -116,15 +115,12 @@ int execute(struct bc0_file *bc0) {
         break;
       }
       
-      
       //if the callStack is empty means we can
       //safely return 
-      
       stack_free(callStack, NULL);
       // Another way to print only in DEBUG mode
       IF_DEBUG(fprintf(stderr, "Returning %d from execute()\n", val2int(val)));
       return   val2int(val);
-
 
     }
 
@@ -202,8 +198,7 @@ int execute(struct bc0_file *bc0) {
       }
       push_int(S, (int32_t)((uint32_t)v1 % (uint32_t)v2 ));
       break;
-      
-      
+
     }
     
    
@@ -215,6 +210,7 @@ int execute(struct bc0_file *bc0) {
       int32_t v2 = val2int(c0v_pop(S));
       push_int(S, (int32_t)((uint32_t)v1 & (uint32_t)v2 ));
       break;
+
     }
 
     case IOR: {
@@ -225,6 +221,7 @@ int execute(struct bc0_file *bc0) {
       int32_t v2 = val2int(c0v_pop(S));
       push_int(S, (int32_t)((uint32_t)v1 |  (uint32_t)v2 ));
       break;
+
     }
     
     case IXOR: {
@@ -277,6 +274,7 @@ int execute(struct bc0_file *bc0) {
       push_int(S, v);
       pc++;
       break;
+
     }
 
     case ILDC: {
@@ -300,10 +298,7 @@ int execute(struct bc0_file *bc0) {
       uint16_t c2 = (uint16_t)P[pc];
       uint16_t index = (c1<<8) | c2;
       ASSERT(index < bc0->string_count);
-
       char* a = bc0->string_pool + index ;
-
-  
       c0v_push(S, ptr2val((void*)a));
       pc++;
       break;
@@ -888,7 +883,7 @@ int execute(struct bc0_file *bc0) {
       //it into the global callStack
       //---------------------------------
 
-      
+
       //----- adjust P and pc to the new function g
       S = c0v_stack_new();  // new(empty stack) for g
       P = a->code; //P now counts to the code of g()
