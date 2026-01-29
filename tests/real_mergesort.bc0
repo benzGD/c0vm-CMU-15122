@@ -1,0 +1,503 @@
+C0 C0 FF EE       # magic number
+00 17             # version 11, arch = 1 (64 bits)
+
+00 00             # int pool count
+# int pool
+
+01 E5             # string pool total size
+# string pool
+72 65 61 64 6C 69 6E 65 5F 5F 31 20 28 2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 31 36 2D 31 34 2E 32 31 29 00  # "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 36 2D 31 34 2E 32 32 3A 20 40 72 65 71 75 69 72 65 73 20 61 6E 6E 6F 74 61 74 69 6F 6E 20 66 61 69 6C 65 64 0A 00  # "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+3A 20 63 61 6C 6C 65 72 20 6C 6F 63 61 74 69 6F 6E 00  # ": caller location"
+6D 65 72 67 65 5F 73 6F 72 74 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 32 38 2E 39 2D 32 38 2E 33 33 29 00  # "merge_sort (real_mergesort.c0: 28.9-28.33)"
+6D 65 72 67 65 5F 73 6F 72 74 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 32 39 2E 39 2D 32 39 2E 33 38 29 00  # "merge_sort (real_mergesort.c0: 29.9-29.38)"
+6D 65 72 67 65 5F 73 6F 72 74 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 33 30 2E 39 2D 33 30 2E 33 35 29 00  # "merge_sort (real_mergesort.c0: 30.9-30.35)"
+28 70 72 6F 67 72 61 6D 20 73 74 61 72 74 29 00  # "(program start)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 33 39 2E 35 2D 33 39 2E 32 36 29 00  # "main (real_mergesort.c0: 39.5-39.26)"
+53 6F 72 74 65 64 3A 20 00  # "Sorted: "
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 34 31 2E 35 2D 34 31 2E 32 32 29 00  # "main (real_mergesort.c0: 41.5-41.22)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 34 33 2E 39 2D 34 33 2E 32 35 29 00  # "main (real_mergesort.c0: 43.9-43.25)"
+20 00  # " "
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 34 34 2E 39 2D 34 34 2E 31 39 29 00  # "main (real_mergesort.c0: 44.9-44.19)"
+00  # ""
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 65 72 67 65 73 6F 72 74 2E 63 30 3A 20 34 36 2E 35 2D 34 36 2E 31 36 29 00  # "main (real_mergesort.c0: 46.5-46.16)"
+
+00 0B             # function count
+# function_pool
+
+#<main>
+00                # number of arguments = 0
+04                # number of local variables = 4
+00 AB             # code length = 171 bytes
+14 01 10 # aldc 272           # s[272] = "(program start)"
+36 00    # vstore 0           # _caller = "(program start)";
+10 08    # bipush 8           # 8
+BC 04    # newarray 4         # alloc_array(int, 8)
+36 02    # vstore 2           # arr = alloc_array(int, 8);
+15 02    # vload 2            # arr
+10 00    # bipush 0           # 0
+63       # aadds              # &arr[0]
+10 0C    # bipush 12          # 12
+4E       # imstore            # arr[0] = 12;
+15 02    # vload 2            # arr
+10 01    # bipush 1           # 1
+63       # aadds              # &arr[1]
+10 0B    # bipush 11          # 11
+4E       # imstore            # arr[1] = 11;
+15 02    # vload 2            # arr
+10 02    # bipush 2           # 2
+63       # aadds              # &arr[2]
+10 0D    # bipush 13          # 13
+4E       # imstore            # arr[2] = 13;
+15 02    # vload 2            # arr
+10 03    # bipush 3           # 3
+63       # aadds              # &arr[3]
+10 05    # bipush 5           # 5
+4E       # imstore            # arr[3] = 5;
+15 02    # vload 2            # arr
+10 04    # bipush 4           # 4
+63       # aadds              # &arr[4]
+10 06    # bipush 6           # 6
+4E       # imstore            # arr[4] = 6;
+15 02    # vload 2            # arr
+10 05    # bipush 5           # 5
+63       # aadds              # &arr[5]
+10 07    # bipush 7           # 7
+4E       # imstore            # arr[5] = 7;
+15 02    # vload 2            # arr
+10 06    # bipush 6           # 6
+63       # aadds              # &arr[6]
+10 01    # bipush 1           # 1
+4E       # imstore            # arr[6] = 1;
+15 02    # vload 2            # arr
+10 07    # bipush 7           # 7
+63       # aadds              # &arr[7]
+10 00    # bipush 0           # 0
+4E       # imstore            # arr[7] = 0;
+15 02    # vload 2            # arr
+10 00    # bipush 0           # 0
+10 07    # bipush 7           # 7
+14 01 20 # aldc 288           # s[288] = "main (real_mergesort.c0: 39.5-39.26)"
+B8 00 0A # invokestatic 10    # merge_sort(arr, 0, 7, "main (real_mergesort.c0: 39.5-39.26)")
+57       # pop                # (ignore result)
+14 01 45 # aldc 325           # s[325] = "Sorted: "
+14 01 4E # aldc 334           # s[334] = "main (real_mergesort.c0: 41.5-41.22)"
+B8 00 01 # invokestatic 1     # print__1("Sorted: ", "main (real_mergesort.c0: 41.5-41.22)")
+57       # pop                # (ignore result)
+10 00    # bipush 0           # 0
+36 03    # vstore 3           # i = 0;
+# <37:loop>
+A7 00 03 # goto +3            # goto <38:body>
+# <38:body>
+15 03    # vload 3            # i
+10 08    # bipush 8           # 8
+A1 00 06 # if_icmplt +6       # if (i < 8) goto <40:then>
+A7 00 24 # goto +36           # goto <41:else>
+# <40:then>
+15 02    # vload 2            # arr
+15 03    # vload 3            # i
+63       # aadds              # &arr[i]
+2E       # imload             # arr[i]
+14 01 73 # aldc 371           # s[371] = "main (real_mergesort.c0: 43.9-43.25)"
+B8 00 03 # invokestatic 3     # printint__1(arr[i], "main (real_mergesort.c0: 43.9-43.25)")
+57       # pop                # (ignore result)
+14 01 98 # aldc 408           # s[408] = " "
+14 01 9A # aldc 410           # s[410] = "main (real_mergesort.c0: 44.9-44.19)"
+B8 00 01 # invokestatic 1     # print__1(" ", "main (real_mergesort.c0: 44.9-44.19)")
+57       # pop                # (ignore result)
+15 03    # vload 3            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 03    # vstore 3           # i += 1;
+A7 00 06 # goto +6            # goto <42:endif>
+# <41:else>
+A7 00 06 # goto +6            # break
+# <42:endif>
+A7 FF CF # goto -49           # goto <37:loop>
+# <39:exit>
+14 01 BF # aldc 447           # s[447] = ""
+14 01 C0 # aldc 448           # s[448] = "main (real_mergesort.c0: 46.5-46.16)"
+B8 00 02 # invokestatic 2     # println__1("", "main (real_mergesort.c0: 46.5-46.16)")
+57       # pop                # (ignore result)
+10 00    # bipush 0           # 0
+36 01    # vstore 1           # _result = 0;
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<print__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 00 # invokenative 0     # print(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<println__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 01 # invokenative 1     # println(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printint__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # i
+B7 00 02 # invokenative 2     # printint(i)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printbool__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # b
+B7 00 03 # invokenative 3     # printbool(b)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printchar__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # c
+B7 00 04 # invokenative 4     # printchar(c)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<flush__1>
+01                # number of arguments = 1
+01                # number of local variables = 1
+00 0A             # code length = 10 bytes
+B7 00 05 # invokenative 5     # flush()
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<eof__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 08             # code length = 8 bytes
+B7 00 06 # invokenative 6     # eof()
+36 01    # vstore 1           # _result = eof();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<readline__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 20             # code length = 32 bytes
+14 00 00 # aldc 0             # s[0] = "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+B8 00 07 # invokestatic 7     # eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")
+10 01    # bipush 1           # 
+82       # ixor               # !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"))
+14 00 37 # aldc 55            # s[55] = "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+15 00    # vload 0            # _caller
+14 00 7D # aldc 125           # s[125] = ": caller location"
+B7 00 07 # invokenative 7     # string_join(_caller, ": caller location")
+B7 00 07 # invokenative 7     # string_join("/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n", string_join(_caller, ": caller location"))
+CF       # assert             # assert !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")) [failure message on stack]
+B7 00 08 # invokenative 8     # readline()
+36 01    # vstore 1           # _result = readline();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<merge>
+05                # number of arguments = 5
+0C                # number of local variables = 12
+01 51             # code length = 337 bytes
+15 02    # vload 2            # mid
+15 01    # vload 1            # left
+64       # isub               # (mid - left)
+10 01    # bipush 1           # 1
+60       # iadd               # ((mid - left) + 1)
+36 05    # vstore 5           # n1 = ((mid - left) + 1);
+15 03    # vload 3            # right
+15 02    # vload 2            # mid
+64       # isub               # (right - mid)
+36 06    # vstore 6           # n2 = (right - mid);
+15 05    # vload 5            # n1
+BC 04    # newarray 4         # alloc_array(int, n1)
+36 07    # vstore 7           # L = alloc_array(int, n1);
+15 06    # vload 6            # n2
+BC 04    # newarray 4         # alloc_array(int, n2)
+36 08    # vstore 8           # R = alloc_array(int, n2);
+10 00    # bipush 0           # 0
+36 09    # vstore 9           # i = 0;
+# <00:loop>
+A7 00 03 # goto +3            # goto <01:body>
+# <01:body>
+15 09    # vload 9            # i
+15 05    # vload 5            # n1
+A1 00 06 # if_icmplt +6       # if (i < n1) goto <03:then>
+A7 00 1C # goto +28           # goto <04:else>
+# <03:then>
+15 07    # vload 7            # L
+15 09    # vload 9            # i
+63       # aadds              # &L[i]
+15 00    # vload 0            # A
+15 01    # vload 1            # left
+15 09    # vload 9            # i
+60       # iadd               # (left + i)
+63       # aadds              # &A[(left + i)]
+2E       # imload             # A[(left + i)]
+4E       # imstore            # L[i] = A[(left + i)];
+15 09    # vload 9            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 09    # vstore 9           # i += 1;
+A7 00 06 # goto +6            # goto <05:endif>
+# <04:else>
+A7 00 06 # goto +6            # break
+# <05:endif>
+A7 FF D7 # goto -41           # goto <00:loop>
+# <02:exit>
+10 00    # bipush 0           # 0
+36 09    # vstore 9           # j = 0;
+# <06:loop>
+A7 00 03 # goto +3            # goto <07:body>
+# <07:body>
+15 09    # vload 9            # j
+15 06    # vload 6            # n2
+A1 00 06 # if_icmplt +6       # if (j < n2) goto <09:then>
+A7 00 1F # goto +31           # goto <10:else>
+# <09:then>
+15 08    # vload 8            # R
+15 09    # vload 9            # j
+63       # aadds              # &R[j]
+15 00    # vload 0            # A
+15 02    # vload 2            # mid
+10 01    # bipush 1           # 1
+60       # iadd               # (mid + 1)
+15 09    # vload 9            # j
+60       # iadd               # ((mid + 1) + j)
+63       # aadds              # &A[((mid + 1) + j)]
+2E       # imload             # A[((mid + 1) + j)]
+4E       # imstore            # R[j] = A[((mid + 1) + j)];
+15 09    # vload 9            # j
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 09    # vstore 9           # j += 1;
+A7 00 06 # goto +6            # goto <11:endif>
+# <10:else>
+A7 00 06 # goto +6            # break
+# <11:endif>
+A7 FF D4 # goto -44           # goto <06:loop>
+# <08:exit>
+10 00    # bipush 0           # 0
+36 09    # vstore 9           # i = 0;
+10 00    # bipush 0           # 0
+36 0A    # vstore 10          # j = 0;
+15 01    # vload 1            # left
+36 0B    # vstore 11          # k = left;
+# <12:loop>
+A7 00 03 # goto +3            # goto <13:body>
+# <13:body>
+15 09    # vload 9            # i
+15 05    # vload 5            # n1
+A1 00 06 # if_icmplt +6       # if (i < n1) goto <18:and>
+A7 00 52 # goto +82           # goto <16:else>
+# <18:and>
+15 0A    # vload 10           # j
+15 06    # vload 6            # n2
+A1 00 06 # if_icmplt +6       # if (j < n2) goto <15:then>
+A7 00 48 # goto +72           # goto <16:else>
+# <15:then>
+15 07    # vload 7            # L
+15 09    # vload 9            # i
+63       # aadds              # &L[i]
+2E       # imload             # L[i]
+15 08    # vload 8            # R
+15 0A    # vload 10           # j
+63       # aadds              # &R[j]
+2E       # imload             # R[j]
+A4 00 06 # if_icmple +6       # if (L[i] <= R[j]) goto <19:then>
+A7 00 19 # goto +25           # goto <20:else>
+# <19:then>
+15 00    # vload 0            # A
+15 0B    # vload 11           # k
+63       # aadds              # &A[k]
+15 07    # vload 7            # L
+15 09    # vload 9            # i
+63       # aadds              # &L[i]
+2E       # imload             # L[i]
+4E       # imstore            # A[k] = L[i];
+15 09    # vload 9            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 09    # vstore 9           # i += 1;
+A7 00 16 # goto +22           # goto <21:endif>
+# <20:else>
+15 00    # vload 0            # A
+15 0B    # vload 11           # k
+63       # aadds              # &A[k]
+15 08    # vload 8            # R
+15 0A    # vload 10           # j
+63       # aadds              # &R[j]
+2E       # imload             # R[j]
+4E       # imstore            # A[k] = R[j];
+15 0A    # vload 10           # j
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 0A    # vstore 10          # j += 1;
+# <21:endif>
+15 0B    # vload 11           # k
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 0B    # vstore 11          # k += 1;
+A7 00 06 # goto +6            # goto <17:endif>
+# <16:else>
+A7 00 06 # goto +6            # break
+# <17:endif>
+A7 FF A1 # goto -95           # goto <12:loop>
+# <14:exit>
+# <22:loop>
+A7 00 03 # goto +3            # goto <23:body>
+# <23:body>
+15 09    # vload 9            # i
+15 05    # vload 5            # n1
+A1 00 06 # if_icmplt +6       # if (i < n1) goto <25:then>
+A7 00 20 # goto +32           # goto <26:else>
+# <25:then>
+15 00    # vload 0            # A
+15 0B    # vload 11           # k
+63       # aadds              # &A[k]
+15 07    # vload 7            # L
+15 09    # vload 9            # i
+63       # aadds              # &L[i]
+2E       # imload             # L[i]
+4E       # imstore            # A[k] = L[i];
+15 09    # vload 9            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 09    # vstore 9           # i += 1;
+15 0B    # vload 11           # k
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 0B    # vstore 11          # k += 1;
+A7 00 06 # goto +6            # goto <27:endif>
+# <26:else>
+A7 00 06 # goto +6            # break
+# <27:endif>
+A7 FF D3 # goto -45           # goto <22:loop>
+# <24:exit>
+# <28:loop>
+A7 00 03 # goto +3            # goto <29:body>
+# <29:body>
+15 0A    # vload 10           # j
+15 06    # vload 6            # n2
+A1 00 06 # if_icmplt +6       # if (j < n2) goto <31:then>
+A7 00 20 # goto +32           # goto <32:else>
+# <31:then>
+15 00    # vload 0            # A
+15 0B    # vload 11           # k
+63       # aadds              # &A[k]
+15 08    # vload 8            # R
+15 0A    # vload 10           # j
+63       # aadds              # &R[j]
+2E       # imload             # R[j]
+4E       # imstore            # A[k] = R[j];
+15 0A    # vload 10           # j
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 0A    # vstore 10          # j += 1;
+15 0B    # vload 11           # k
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 0B    # vstore 11          # k += 1;
+A7 00 06 # goto +6            # goto <33:endif>
+# <32:else>
+A7 00 06 # goto +6            # break
+# <33:endif>
+A7 FF D3 # goto -45           # goto <28:loop>
+# <30:exit>
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<merge_sort>
+04                # number of arguments = 4
+05                # number of local variables = 5
+00 49             # code length = 73 bytes
+15 01    # vload 1            # left
+15 02    # vload 2            # right
+A1 00 06 # if_icmplt +6       # if (left < right) goto <34:then>
+A7 00 3F # goto +63           # goto <35:else>
+# <34:then>
+15 01    # vload 1            # left
+15 02    # vload 2            # right
+15 01    # vload 1            # left
+64       # isub               # (right - left)
+10 02    # bipush 2           # 2
+6C       # idiv               # ((right - left) / 2)
+60       # iadd               # (left + ((right - left) / 2))
+36 04    # vstore 4           # mid = (left + ((right - left) / 2));
+15 00    # vload 0            # A
+15 01    # vload 1            # left
+15 04    # vload 4            # mid
+14 00 8F # aldc 143           # s[143] = "merge_sort (real_mergesort.c0: 28.9-28.33)"
+B8 00 0A # invokestatic 10    # merge_sort(A, left, mid, "merge_sort (real_mergesort.c0: 28.9-28.33)")
+57       # pop                # (ignore result)
+15 00    # vload 0            # A
+15 04    # vload 4            # mid
+10 01    # bipush 1           # 1
+60       # iadd               # (mid + 1)
+15 02    # vload 2            # right
+14 00 BA # aldc 186           # s[186] = "merge_sort (real_mergesort.c0: 29.9-29.38)"
+B8 00 0A # invokestatic 10    # merge_sort(A, (mid + 1), right, "merge_sort (real_mergesort.c0: 29.9-29.38)")
+57       # pop                # (ignore result)
+15 00    # vload 0            # A
+15 01    # vload 1            # left
+15 04    # vload 4            # mid
+15 02    # vload 2            # right
+14 00 E5 # aldc 229           # s[229] = "merge_sort (real_mergesort.c0: 30.9-30.35)"
+B8 00 09 # invokestatic 9     # merge(A, left, mid, right, "merge_sort (real_mergesort.c0: 30.9-30.35)")
+57       # pop                # (ignore result)
+A7 00 03 # goto +3            # goto <36:endif>
+# <35:else>
+# <36:endif>
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+00 09             # native count
+# native pool
+00 01 00 06       # print
+00 01 00 0A       # println
+00 01 00 09       # printint
+00 01 00 07       # printbool
+00 01 00 08       # printchar
+00 00 00 05       # flush
+00 00 00 04       # eof
+00 02 00 64       # string_join
+00 00 00 0B       # readline
+

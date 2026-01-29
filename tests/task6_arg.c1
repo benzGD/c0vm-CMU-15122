@@ -1,0 +1,19 @@
+typedef int op_t(int a, int b);
+
+int add(int a, int b) { return a + b; }
+int sub(int a, int b) { return a - b; }
+
+// Function taking a function pointer as an argument
+int apply(op_t* op, int x, int y) {
+    return (*op)(x, y); // INVOKEDYNAMIC here
+}
+
+int main() {
+    // Test 1: Pass 'add'
+    int res1 = apply(&add, 10, 5); // 15
+    
+    // Test 2: Pass 'sub'
+    int res2 = apply(&sub, 10, 5); // 5
+    
+    return res1 + res2;
+}

@@ -1,0 +1,48 @@
+#use <conio>
+
+void merge(int[] A, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    int[] L = alloc_array(int, n1);
+    int[] R = alloc_array(int, n2);
+
+    for (int i = 0; i < n1; i++) L[i] = A[left + i];
+    for (int j = 0; j < n2; j++) R[j] = A[mid + 1 + j];
+
+    int i = 0; 
+    int j = 0; 
+    int k = left;
+    
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) { A[k] = L[i]; i++; }
+        else { A[k] = R[j]; j++; }
+        k++;
+    }
+    while (i < n1) { A[k] = L[i]; i++; k++; }
+    while (j < n2) { A[k] = R[j]; j++; k++; }
+}
+
+void merge_sort(int[] A, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        merge_sort(A, left, mid);
+        merge_sort(A, mid + 1, right);
+        merge(A, left, mid, right);
+    }
+}
+
+int main() {
+    int[] arr = alloc_array(int, 8);
+    arr[0] = 12; arr[1] = 11; arr[2] = 13; arr[3] = 5; 
+    arr[4] = 6;  arr[5] = 7;  arr[6] = 1;  arr[7] = 0;
+
+    merge_sort(arr, 0, 7);
+
+    print("Sorted: "); // FIXED: was printstring
+    for (int i = 0; i < 8; i++) {
+        printint(arr[i]);
+        print(" ");    // FIXED: was printstring
+    }
+    println(""); 
+    return 0;
+}

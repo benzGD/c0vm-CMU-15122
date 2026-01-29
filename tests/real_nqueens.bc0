@@ -1,0 +1,377 @@
+C0 C0 FF EE       # magic number
+00 17             # version 11, arch = 1 (64 bits)
+
+00 00             # int pool count
+# int pool
+
+01 E5             # string pool total size
+# string pool
+72 65 61 64 6C 69 6E 65 5F 5F 31 20 28 2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 31 36 2D 31 34 2E 32 31 29 00  # "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 36 2D 31 34 2E 32 32 3A 20 40 72 65 71 75 69 72 65 73 20 61 6E 6E 6F 74 61 74 69 6F 6E 20 66 61 69 6C 65 64 0A 00  # "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+3A 20 63 61 6C 6C 65 72 20 6C 6F 63 61 74 69 6F 6E 00  # ": caller location"
+73 6F 6C 76 65 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 31 35 2E 31 33 2D 31 35 2E 33 38 29 00  # "solve (real_nqueens.c0: 15.13-15.38)"
+73 6F 6C 76 65 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 31 37 2E 31 37 2D 31 37 2E 34 31 29 00  # "solve (real_nqueens.c0: 17.17-17.41)"
+28 70 72 6F 67 72 61 6D 20 73 74 61 72 74 29 00  # "(program start)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 32 38 2E 39 2D 32 38 2E 32 37 29 00  # "main (real_nqueens.c0: 28.9-28.27)"
+53 6F 6C 75 74 69 6F 6E 20 28 52 6F 77 73 29 3A 20 00  # "Solution (Rows): "
+6D 61 69 6E 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 32 39 2E 39 2D 32 39 2E 33 35 29 00  # "main (real_nqueens.c0: 29.9-29.35)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 33 31 2E 31 33 2D 33 31 2E 33 31 29 00  # "main (real_nqueens.c0: 31.13-31.31)"
+20 00  # " "
+6D 61 69 6E 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 33 32 2E 31 33 2D 33 32 2E 32 33 29 00  # "main (real_nqueens.c0: 32.13-32.23)"
+00  # ""
+6D 61 69 6E 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 33 34 2E 39 2D 33 34 2E 32 30 29 00  # "main (real_nqueens.c0: 34.9-34.20)"
+4E 6F 20 73 6F 6C 75 74 69 6F 6E 20 66 6F 75 6E 64 2E 00  # "No solution found."
+6D 61 69 6E 20 28 72 65 61 6C 5F 6E 71 75 65 65 6E 73 2E 63 30 3A 20 33 36 2E 39 2D 33 36 2E 33 36 29 00  # "main (real_nqueens.c0: 36.9-36.36)"
+
+00 0B             # function count
+# function_pool
+
+#<main>
+00                # number of arguments = 0
+05                # number of local variables = 5
+00 83             # code length = 131 bytes
+14 00 D9 # aldc 217           # s[217] = "(program start)"
+36 00    # vstore 0           # _caller = "(program start)";
+10 08    # bipush 8           # 8
+36 02    # vstore 2           # N = 8;
+15 02    # vload 2            # N
+BC 04    # newarray 4         # alloc_array(int, N)
+36 03    # vstore 3           # board = alloc_array(int, N);
+15 03    # vload 3            # board
+10 00    # bipush 0           # 0
+15 02    # vload 2            # N
+14 00 E9 # aldc 233           # s[233] = "main (real_nqueens.c0: 28.9-28.27)"
+B8 00 0A # invokestatic 10    # solve(board, 0, N, "main (real_nqueens.c0: 28.9-28.27)")
+10 01    # bipush 1           # true
+9F 00 06 # if_cmpeq +6        # if (solve(board, 0, N, "main (real_nqueens.c0: 28.9-28.27)") == true) goto <28:then>
+A7 00 52 # goto +82           # goto <29:else>
+# <28:then>
+14 01 0C # aldc 268           # s[268] = "Solution (Rows): "
+14 01 1E # aldc 286           # s[286] = "main (real_nqueens.c0: 29.9-29.35)"
+B8 00 01 # invokestatic 1     # print__1("Solution (Rows): ", "main (real_nqueens.c0: 29.9-29.35)")
+57       # pop                # (ignore result)
+10 00    # bipush 0           # 0
+36 04    # vstore 4           # i = 0;
+# <31:loop>
+A7 00 03 # goto +3            # goto <32:body>
+# <32:body>
+15 04    # vload 4            # i
+15 02    # vload 2            # N
+A1 00 06 # if_icmplt +6       # if (i < N) goto <34:then>
+A7 00 24 # goto +36           # goto <35:else>
+# <34:then>
+15 03    # vload 3            # board
+15 04    # vload 4            # i
+63       # aadds              # &board[i]
+2E       # imload             # board[i]
+14 01 41 # aldc 321           # s[321] = "main (real_nqueens.c0: 31.13-31.31)"
+B8 00 03 # invokestatic 3     # printint__1(board[i], "main (real_nqueens.c0: 31.13-31.31)")
+57       # pop                # (ignore result)
+14 01 65 # aldc 357           # s[357] = " "
+14 01 67 # aldc 359           # s[359] = "main (real_nqueens.c0: 32.13-32.23)"
+B8 00 01 # invokestatic 1     # print__1(" ", "main (real_nqueens.c0: 32.13-32.23)")
+57       # pop                # (ignore result)
+15 04    # vload 4            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 04    # vstore 4           # i += 1;
+A7 00 06 # goto +6            # goto <36:endif>
+# <35:else>
+A7 00 06 # goto +6            # break
+# <36:endif>
+A7 FF CF # goto -49           # goto <31:loop>
+# <33:exit>
+14 01 8B # aldc 395           # s[395] = ""
+14 01 8C # aldc 396           # s[396] = "main (real_nqueens.c0: 34.9-34.20)"
+B8 00 02 # invokestatic 2     # println__1("", "main (real_nqueens.c0: 34.9-34.20)")
+57       # pop                # (ignore result)
+A7 00 0D # goto +13           # goto <30:endif>
+# <29:else>
+14 01 AF # aldc 431           # s[431] = "No solution found."
+14 01 C2 # aldc 450           # s[450] = "main (real_nqueens.c0: 36.9-36.36)"
+B8 00 01 # invokestatic 1     # print__1("No solution found.", "main (real_nqueens.c0: 36.9-36.36)")
+57       # pop                # (ignore result)
+# <30:endif>
+10 00    # bipush 0           # 0
+36 01    # vstore 1           # _result = 0;
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<print__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 00 # invokenative 0     # print(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<println__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 01 # invokenative 1     # println(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printint__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # i
+B7 00 02 # invokenative 2     # printint(i)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printbool__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # b
+B7 00 03 # invokenative 3     # printbool(b)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printchar__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # c
+B7 00 04 # invokenative 4     # printchar(c)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<flush__1>
+01                # number of arguments = 1
+01                # number of local variables = 1
+00 0A             # code length = 10 bytes
+B7 00 05 # invokenative 5     # flush()
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<eof__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 08             # code length = 8 bytes
+B7 00 06 # invokenative 6     # eof()
+36 01    # vstore 1           # _result = eof();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<readline__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 20             # code length = 32 bytes
+14 00 00 # aldc 0             # s[0] = "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+B8 00 07 # invokestatic 7     # eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")
+10 01    # bipush 1           # 
+82       # ixor               # !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"))
+14 00 37 # aldc 55            # s[55] = "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+15 00    # vload 0            # _caller
+14 00 7D # aldc 125           # s[125] = ": caller location"
+B7 00 07 # invokenative 7     # string_join(_caller, ": caller location")
+B7 00 07 # invokenative 7     # string_join("/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n", string_join(_caller, ": caller location"))
+CF       # assert             # assert !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")) [failure message on stack]
+B7 00 08 # invokenative 8     # readline()
+36 01    # vstore 1           # _result = readline();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<is_safe>
+05                # number of arguments = 5
+08                # number of local variables = 8
+00 73             # code length = 115 bytes
+10 00    # bipush 0           # 0
+36 06    # vstore 6           # i = 0;
+# <00:loop>
+A7 00 03 # goto +3            # goto <01:body>
+# <01:body>
+15 06    # vload 6            # i
+15 02    # vload 2            # col
+A1 00 06 # if_icmplt +6       # if (i < col) goto <03:then>
+A7 00 58 # goto +88           # goto <04:else>
+# <03:then>
+15 00    # vload 0            # board
+15 06    # vload 6            # i
+63       # aadds              # &board[i]
+2E       # imload             # board[i]
+15 01    # vload 1            # row
+9F 00 06 # if_cmpeq +6        # if (board[i] == row) goto <06:then>
+A7 00 0D # goto +13           # goto <07:else>
+# <06:then>
+10 00    # bipush 0           # false
+36 05    # vstore 5           # _result = false;
+15 05    # vload 5            # _result
+B0       # return             # 
+A7 00 03 # goto +3            # goto <08:endif>
+# <07:else>
+# <08:endif>
+15 02    # vload 2            # col
+15 06    # vload 6            # i
+64       # isub               # (col - i)
+36 07    # vstore 7           # diff = (col - i);
+15 00    # vload 0            # board
+15 06    # vload 6            # i
+63       # aadds              # &board[i]
+2E       # imload             # board[i]
+15 01    # vload 1            # row
+15 07    # vload 7            # diff
+64       # isub               # (row - diff)
+9F 00 17 # if_cmpeq +23       # if (board[i] == (row - diff)) goto <09:then>
+A7 00 03 # goto +3            # goto <12:or>
+# <12:or>
+15 00    # vload 0            # board
+15 06    # vload 6            # i
+63       # aadds              # &board[i]
+2E       # imload             # board[i]
+15 01    # vload 1            # row
+15 07    # vload 7            # diff
+60       # iadd               # (row + diff)
+9F 00 06 # if_cmpeq +6        # if (board[i] == (row + diff)) goto <09:then>
+A7 00 0D # goto +13           # goto <10:else>
+# <09:then>
+10 00    # bipush 0           # false
+36 05    # vstore 5           # _result = false;
+15 05    # vload 5            # _result
+B0       # return             # 
+A7 00 03 # goto +3            # goto <11:endif>
+# <10:else>
+# <11:endif>
+15 06    # vload 6            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 06    # vstore 6           # i += 1;
+A7 00 06 # goto +6            # goto <05:endif>
+# <04:else>
+A7 00 06 # goto +6            # break
+# <05:endif>
+A7 FF 9B # goto -101          # goto <00:loop>
+# <02:exit>
+10 01    # bipush 1           # true
+36 05    # vstore 5           # _result = true;
+15 05    # vload 5            # _result
+B0       # return             # 
+
+
+#<solve>
+04                # number of arguments = 4
+06                # number of local variables = 6
+00 86             # code length = 134 bytes
+15 01    # vload 1            # col
+15 02    # vload 2            # N
+A2 00 06 # if_icmpge +6       # if (col >= N) goto <13:then>
+A7 00 0D # goto +13           # goto <14:else>
+# <13:then>
+10 01    # bipush 1           # true
+36 04    # vstore 4           # _result = true;
+15 04    # vload 4            # _result
+B0       # return             # 
+A7 00 03 # goto +3            # goto <15:endif>
+# <14:else>
+# <15:endif>
+10 00    # bipush 0           # 0
+36 05    # vstore 5           # i = 0;
+# <16:loop>
+A7 00 03 # goto +3            # goto <17:body>
+# <17:body>
+15 05    # vload 5            # i
+15 02    # vload 2            # N
+A1 00 06 # if_icmplt +6       # if (i < N) goto <19:then>
+A7 00 57 # goto +87           # goto <20:else>
+# <19:then>
+15 00    # vload 0            # board
+15 05    # vload 5            # i
+15 01    # vload 1            # col
+15 02    # vload 2            # N
+14 00 8F # aldc 143           # s[143] = "solve (real_nqueens.c0: 15.13-15.38)"
+B8 00 09 # invokestatic 9     # is_safe(board, i, col, N, "solve (real_nqueens.c0: 15.13-15.38)")
+10 01    # bipush 1           # true
+9F 00 06 # if_cmpeq +6        # if (is_safe(board, i, col, N, "solve (real_nqueens.c0: 15.13-15.38)") == true) goto <22:then>
+A7 00 37 # goto +55           # goto <23:else>
+# <22:then>
+15 00    # vload 0            # board
+15 01    # vload 1            # col
+63       # aadds              # &board[col]
+15 05    # vload 5            # i
+4E       # imstore            # board[col] = i;
+15 00    # vload 0            # board
+15 01    # vload 1            # col
+10 01    # bipush 1           # 1
+60       # iadd               # (col + 1)
+15 02    # vload 2            # N
+14 00 B4 # aldc 180           # s[180] = "solve (real_nqueens.c0: 17.17-17.41)"
+B8 00 0A # invokestatic 10    # solve(board, (col + 1), N, "solve (real_nqueens.c0: 17.17-17.41)")
+10 01    # bipush 1           # true
+9F 00 06 # if_cmpeq +6        # if (solve(board, (col + 1), N, "solve (real_nqueens.c0: 17.17-17.41)") == true) goto <25:then>
+A7 00 0D # goto +13           # goto <26:else>
+# <25:then>
+10 01    # bipush 1           # true
+36 04    # vstore 4           # _result = true;
+15 04    # vload 4            # _result
+B0       # return             # 
+A7 00 03 # goto +3            # goto <27:endif>
+# <26:else>
+# <27:endif>
+15 00    # vload 0            # board
+15 01    # vload 1            # col
+63       # aadds              # &board[col]
+10 00    # bipush 0           # 0
+4E       # imstore            # board[col] = 0;
+A7 00 03 # goto +3            # goto <24:endif>
+# <23:else>
+# <24:endif>
+15 05    # vload 5            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 05    # vstore 5           # i += 1;
+A7 00 06 # goto +6            # goto <21:endif>
+# <20:else>
+A7 00 06 # goto +6            # break
+# <21:endif>
+A7 FF 9C # goto -100          # goto <16:loop>
+# <18:exit>
+10 00    # bipush 0           # false
+36 04    # vstore 4           # _result = false;
+15 04    # vload 4            # _result
+B0       # return             # 
+
+00 09             # native count
+# native pool
+00 01 00 06       # print
+00 01 00 0A       # println
+00 01 00 09       # printint
+00 01 00 07       # printbool
+00 01 00 08       # printchar
+00 00 00 05       # flush
+00 00 00 04       # eof
+00 02 00 64       # string_join
+00 00 00 0B       # readline
+

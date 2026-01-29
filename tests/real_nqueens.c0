@@ -1,0 +1,39 @@
+#use <conio>
+
+bool is_safe(int[] board, int row, int col, int N) {
+    for (int i = 0; i < col; i++) {
+        if (board[i] == row) return false;
+        int diff = col - i;
+        if (board[i] == row - diff || board[i] == row + diff) return false;
+    }
+    return true;
+}
+
+bool solve(int[] board, int col, int N) {
+    if (col >= N) return true;
+    for (int i = 0; i < N; i++) {
+        if (is_safe(board, i, col, N)) {
+            board[col] = i;
+            if (solve(board, col + 1, N)) return true;
+            board[col] = 0; // Backtrack
+        }
+    }
+    return false;
+}
+
+int main() {
+    int N = 8;
+    int[] board = alloc_array(int, N);
+    
+    if (solve(board, 0, N)) {
+        print("Solution (Rows): ");
+        for (int i = 0; i < N; i++) {
+            printint(board[i]);
+            print(" ");
+        }
+        println("");
+    } else {
+        print("No solution found.");
+    }
+    return 0;
+}

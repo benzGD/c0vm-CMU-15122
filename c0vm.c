@@ -147,7 +147,7 @@ int execute(struct bc0_file *bc0) {
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
 
-      push_int(S, v1 + v2);
+      push_int(S, (int32_t)((uint32_t)v1 +  (uint32_t)v2 ));
       break;
     }
     
@@ -158,7 +158,7 @@ int execute(struct bc0_file *bc0) {
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
   
-      push_int(S, v2 - v1);
+      push_int(S, (int32_t)((uint32_t)v2 -  (uint32_t)v1 ));
       break;
     }
 
@@ -168,8 +168,7 @@ int execute(struct bc0_file *bc0) {
       int32_t v1 = val2int(c0v_pop(S));
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
-  
-      push_int(S, v2*v1);
+      push_int(S, (int32_t)((uint32_t)v1 * (uint32_t)v2 ));
       break;
     }
 
@@ -189,8 +188,9 @@ int execute(struct bc0_file *bc0) {
       {
         c0_arith_error("illegal integer division!(INT_MIN DIVIDED BY -1)");
       }
-      
-      push_int(S, v2 / v1);
+
+
+      push_int(S, (int32_t)((uint32_t)v1 / (uint32_t)v2 ));
       break;
       
     }
@@ -211,8 +211,7 @@ int execute(struct bc0_file *bc0) {
       {
         c0_arith_error("illegal integer division!(INT_MIN DIVIDED BY -1)");
       }
-      
-      push_int(S, v2 % v1);
+      push_int(S, (int32_t)((uint32_t)v1 % (uint32_t)v2 ));
       break;
       
       
@@ -225,8 +224,7 @@ int execute(struct bc0_file *bc0) {
       int32_t v1 = val2int(c0v_pop(S));
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
-  
-      push_int(S, v2 & v1);
+      push_int(S, (int32_t)((uint32_t)v1 & (uint32_t)v2 ));
       break;
     }
 
@@ -236,8 +234,7 @@ int execute(struct bc0_file *bc0) {
       int32_t v1 = val2int(c0v_pop(S));
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
-  
-      push_int(S, v2 | v1);
+      push_int(S, (int32_t)((uint32_t)v1 |  (uint32_t)v2 ));
       break;
     }
     
@@ -247,8 +244,7 @@ int execute(struct bc0_file *bc0) {
       int32_t v1 = val2int(c0v_pop(S));
       ASSERT(!c0v_stack_empty(S));
       int32_t v2 = val2int(c0v_pop(S));
-  
-      push_int(S, v2 | v1);
+      push_int(S, (int32_t)((uint32_t)v1 ^  (uint32_t)v2 ));
       break;
       
     }
@@ -264,8 +260,7 @@ int execute(struct bc0_file *bc0) {
         c0_arith_error("shifting error!");
       }
       
-  
-      push_int(S, v2 >> v1);
+      push_int(S,  (int32_t)((uint32_t)v2 >> (uint32_t)v1));
       break;
       
     }
@@ -280,7 +275,7 @@ int execute(struct bc0_file *bc0) {
       {
         c0_arith_error("shifting error!");
       }
-      push_int(S, v2 << v1);
+      push_int(S,  (int32_t)((uint32_t)v2 << (uint32_t)v1));
       break;
       
     }
@@ -774,6 +769,7 @@ int execute(struct bc0_file *bc0) {
         c0_memory_error("NULL pointer!!!\n");
       }
       
+      
       push_int(S,  a->count);
       break;
       
@@ -784,31 +780,201 @@ int execute(struct bc0_file *bc0) {
       pc++;
       
       
-      int32_t n =  val2int(c0v_pop(S));
+      uint32_t i = (uint32_t)val2int(c0v_pop(S));
+      // if (i < 0)
+      // {
+      //   c0_memory_error("NULL pointer!!!\n");
+      // }
       c0_array* a = (c0_array*)val2ptr(c0v_pop(S));
-
-      assert(a != NULL &&  0 <= n && n < a->count);
-
-
-      c0v_push(S, ptr2val(a->elems + (n * a->elt_size )));
-
+      
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      
+      
+      if (i >= a->count)
+      {
+        c0_memory_error("invalid access to the memoery outside the bounds of the array\n");
+      }
+      
+      
+      c0v_push(S, ptr2val((uint8_t*)a->elems + (i * a->elt_size )));
+      
       break;
     }
-
-
+    
+    
     /* BONUS -- C1 operations */
+    
+    case CHECKTAG: {
+      pc++;
+      uint16_t c1 = (uint16_t)P[pc];
+      pc++;
+      uint16_t c2 = (uint16_t)P[pc];
+      uint16_t tag = (c1<<8) | c2;
+      
+      c0_tagged_ptr* a = (c0_tagged_ptr*)val2tagged_ptr(c0v_pop(S));
+      if (a == NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      if (a->tag  != tag)
+      {
+        c0_memory_error("tags not matching!\n");
+      }
+      
+      //if yes then push the same pointer stripped of its tag
+      
+      c0v_push(S, ptr2val(a->p));
+      pc++;
+      break;
+      
+    }
+    
+    case HASTAG: {
+      pc++;
+      uint16_t c1 = (uint16_t)P[pc];
+      pc++;
+      uint16_t c2 = (uint16_t)P[pc];
+      uint16_t tag = (c1<<8) | c2;
 
-    case CHECKTAG:
 
-    case HASTAG:
 
-    case ADDTAG:
+      // void* a = val2ptr(c0v_pop(S));
 
-    case ADDROF_STATIC:
 
-    case ADDROF_NATIVE:
+      
+      c0_tagged_ptr* at = (c0_tagged_ptr*)val2tagged_ptr(c0v_pop(S));
+      if (at== NULL)
+      {
+        c0_memory_error("NULL pointer!!!\n");
+      }
+      if (at->tag  != tag)
+      {
+        push_int(S, 0);
+        
+      } else
+      {
+        push_int(S, 1);
+      }
+      pc++;
+      break;
+    }
+    
+    case ADDTAG: {
+      pc++;
+      uint16_t c1 = (uint16_t)P[pc];
+      pc++;
+      uint16_t c2 = (uint16_t)P[pc];
+      uint16_t tag = (c1<<8) | c2;
 
-    case INVOKEDYNAMIC:
+      void* a = val2ptr(c0v_pop(S));
+
+      if (a == NULL || !is_taggedptr(a))
+      {
+
+          c0v_push(S, tagged_ptr2val(a, tag));
+
+      } else {
+
+        assert(is_taggedptr(a));
+
+        c0_tagged_ptr* at =   unmark_tagged_ptr(a);
+        at->tag = tag;
+
+        c0v_push(S, ptr2val(mark_tagged_ptr(at)));
+      }
+      pc++;
+      break;
+
+
+
+    }
+
+    case ADDROF_STATIC: {
+      pc++;
+      uint16_t c1 = (uint16_t)P[pc];
+      pc++;
+      uint16_t c2 = (uint16_t)P[pc];
+      uint16_t index = (c1<<8) | c2;
+      ASSERT(index < bc0->function_count);
+
+      struct function_info *a = bc0->function_pool + index;
+
+
+      c0v_push(S, ptr2val((void*)a));
+
+      pc++;
+      break;
+
+
+
+    }
+
+    case ADDROF_NATIVE:{
+      pc++;
+      uint16_t c1 = (uint16_t)P[pc];
+      pc++;
+      uint16_t c2 = (uint16_t)P[pc];
+      uint16_t index = (c1<<8) | c2;
+      ASSERT(index < bc0->function_count);
+  
+      struct native_info *a = bc0->native_pool + index;
+  
+  
+      c0v_push(S, ptr2val((void*)a));
+  
+      pc++;
+      break;
+
+
+    }
+
+    case INVOKEDYNAMIC: {
+      pc++; //already incremented
+      struct function_info *a = (struct function_info*)(val2ptr(c0v_pop(S)));
+
+      //creating a local array for function g
+    
+
+      uint8_t Vg_num_args = a->num_args;
+      uint8_t Vg_num_vars = a->num_vars;
+      c0_value *Vg = xcalloc(Vg_num_vars, sizeof(c0_value));
+
+
+
+      for (int8_t i = Vg_num_args -1; i >= 0 ; i--)
+      {
+
+        assert(i >= 0);
+        Vg[i] = c0v_pop(S);
+        //populating the local variable array for g()
+      }
+
+      //create a new frame struct pointer
+      frame* Frm = xcalloc(1, sizeof(frame));
+      Frm->S = S;
+      Frm->P = P;
+      Frm->pc = pc;
+      Frm->V = V;
+      push(callStack, (void*)Frm);
+
+      //save all the info of f() here and push
+      //it into the global callStack
+      //---------------------------------
+
+
+
+
+      //----- adjust P and pc to the new function g
+      S = c0v_stack_new();  // new(empty stack) for g
+      P = a->code; //P now counts to the code of g()
+      pc = 0;  //reset the pc (relative pc)
+      V = Vg ; //old V becomes new Vg
+      break;
+
+    }
 
     default:
       fprintf(stderr, "invalid opcode: 0x%02x\n", P[pc]);

@@ -1,0 +1,32 @@
+#use <conio>
+
+typedef int op_t(int x);
+
+int square(int x) { return x * x; }
+int negate(int x) { return -x; }
+
+// Applies function f to every element of A
+void map(int[] A, int n, op_t* f) {
+    for (int i = 0; i < n; i++) {
+        A[i] = (*f)(A[i]); // INVOKEDYNAMIC
+    }
+}
+
+int main() {
+    int[] data = alloc_array(int, 5);
+    for (int i = 0; i < 5; i++) data[i] = i + 1; // 1, 2, 3, 4, 5
+
+    // Apply square
+    map(data, 5, &square); // Becomes: 1, 4, 9, 16, 25
+
+    // Apply negate
+    map(data, 5, &negate); // Becomes: -1, -4, -9, -16, -25
+
+    print("Result: ");
+    for (int i = 0; i < 5; i++) {
+        printint(data[i]);
+        print(" ");
+    }
+    println("");
+    return 0;
+}

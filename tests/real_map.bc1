@@ -1,0 +1,300 @@
+C0 C0 FF EE       # magic number
+00 17             # version 11, arch = 1 (64 bits)
+
+00 00             # int pool count
+# int pool
+
+01 84             # string pool total size
+# string pool
+72 65 61 64 6C 69 6E 65 5F 5F 31 20 28 2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 31 36 2D 31 34 2E 32 31 29 00  # "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 36 2D 31 34 2E 32 32 3A 20 40 72 65 71 75 69 72 65 73 20 61 6E 6E 6F 74 61 74 69 6F 6E 20 66 61 69 6C 65 64 0A 00  # "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+3A 20 63 61 6C 6C 65 72 20 6C 6F 63 61 74 69 6F 6E 00  # ": caller location"
+6D 61 70 20 28 72 65 61 6C 5F 6D 61 70 2E 63 31 3A 20 31 31 2E 31 36 2D 31 31 2E 32 36 29 00  # "map (real_map.c1: 11.16-11.26)"
+28 70 72 6F 67 72 61 6D 20 73 74 61 72 74 29 00  # "(program start)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 61 70 2E 63 31 3A 20 32 30 2E 35 2D 32 30 2E 32 36 29 00  # "main (real_map.c1: 20.5-20.26)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 61 70 2E 63 31 3A 20 32 33 2E 35 2D 32 33 2E 32 36 29 00  # "main (real_map.c1: 23.5-23.26)"
+52 65 73 75 6C 74 3A 20 00  # "Result: "
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 61 70 2E 63 31 3A 20 32 35 2E 35 2D 32 35 2E 32 32 29 00  # "main (real_map.c1: 25.5-25.22)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 61 70 2E 63 31 3A 20 32 37 2E 39 2D 32 37 2E 32 36 29 00  # "main (real_map.c1: 27.9-27.26)"
+20 00  # " "
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 61 70 2E 63 31 3A 20 32 38 2E 39 2D 32 38 2E 31 39 29 00  # "main (real_map.c1: 28.9-28.19)"
+00  # ""
+6D 61 69 6E 20 28 72 65 61 6C 5F 6D 61 70 2E 63 31 3A 20 33 30 2E 35 2D 33 30 2E 31 36 29 00  # "main (real_map.c1: 30.5-30.16)"
+
+00 0C             # function count
+# function_pool
+
+#<main>
+00                # number of arguments = 0
+04                # number of local variables = 4
+00 A6             # code length = 166 bytes
+14 00 AE # aldc 174           # s[174] = "(program start)"
+36 00    # vstore 0           # _caller = "(program start)";
+10 05    # bipush 5           # 5
+BC 04    # newarray 4         # alloc_array(int, 5)
+36 02    # vstore 2           # data = alloc_array(int, 5);
+10 00    # bipush 0           # 0
+36 03    # vstore 3           # i = 0;
+# <06:loop>
+A7 00 03 # goto +3            # goto <07:body>
+# <07:body>
+15 03    # vload 3            # i
+10 05    # bipush 5           # 5
+A1 00 06 # if_icmplt +6       # if (i < 5) goto <09:then>
+A7 00 18 # goto +24           # goto <10:else>
+# <09:then>
+15 02    # vload 2            # data
+15 03    # vload 3            # i
+63       # aadds              # &data[i]
+15 03    # vload 3            # i
+10 01    # bipush 1           # 1
+60       # iadd               # (i + 1)
+4E       # imstore            # data[i] = (i + 1);
+15 03    # vload 3            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 03    # vstore 3           # i += 1;
+A7 00 06 # goto +6            # goto <11:endif>
+# <10:else>
+A7 00 06 # goto +6            # break
+# <11:endif>
+A7 FF DB # goto -37           # goto <06:loop>
+# <08:exit>
+15 02    # vload 2            # data
+10 05    # bipush 5           # 5
+16 00 09 # addrof_static 9    # &square
+14 00 BE # aldc 190           # s[190] = "main (real_map.c1: 20.5-20.26)"
+B8 00 0B # invokestatic 11    # map(data, 5, &square, "main (real_map.c1: 20.5-20.26)")
+57       # pop                # (ignore result)
+15 02    # vload 2            # data
+10 05    # bipush 5           # 5
+16 00 0A # addrof_static 10   # &negate
+14 00 DD # aldc 221           # s[221] = "main (real_map.c1: 23.5-23.26)"
+B8 00 0B # invokestatic 11    # map(data, 5, &negate, "main (real_map.c1: 23.5-23.26)")
+57       # pop                # (ignore result)
+14 00 FC # aldc 252           # s[252] = "Result: "
+14 01 05 # aldc 261           # s[261] = "main (real_map.c1: 25.5-25.22)"
+B8 00 01 # invokestatic 1     # print__1("Result: ", "main (real_map.c1: 25.5-25.22)")
+57       # pop                # (ignore result)
+10 00    # bipush 0           # 0
+36 03    # vstore 3           # i = 0;
+# <12:loop>
+A7 00 03 # goto +3            # goto <13:body>
+# <13:body>
+15 03    # vload 3            # i
+10 05    # bipush 5           # 5
+A1 00 06 # if_icmplt +6       # if (i < 5) goto <15:then>
+A7 00 24 # goto +36           # goto <16:else>
+# <15:then>
+15 02    # vload 2            # data
+15 03    # vload 3            # i
+63       # aadds              # &data[i]
+2E       # imload             # data[i]
+14 01 24 # aldc 292           # s[292] = "main (real_map.c1: 27.9-27.26)"
+B8 00 03 # invokestatic 3     # printint__1(data[i], "main (real_map.c1: 27.9-27.26)")
+57       # pop                # (ignore result)
+14 01 43 # aldc 323           # s[323] = " "
+14 01 45 # aldc 325           # s[325] = "main (real_map.c1: 28.9-28.19)"
+B8 00 01 # invokestatic 1     # print__1(" ", "main (real_map.c1: 28.9-28.19)")
+57       # pop                # (ignore result)
+15 03    # vload 3            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 03    # vstore 3           # i += 1;
+A7 00 06 # goto +6            # goto <17:endif>
+# <16:else>
+A7 00 06 # goto +6            # break
+# <17:endif>
+A7 FF CF # goto -49           # goto <12:loop>
+# <14:exit>
+14 01 64 # aldc 356           # s[356] = ""
+14 01 65 # aldc 357           # s[357] = "main (real_map.c1: 30.5-30.16)"
+B8 00 02 # invokestatic 2     # println__1("", "main (real_map.c1: 30.5-30.16)")
+57       # pop                # (ignore result)
+10 00    # bipush 0           # 0
+36 01    # vstore 1           # _result = 0;
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<print__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 00 # invokenative 0     # print(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<println__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 01 # invokenative 1     # println(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printint__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # i
+B7 00 02 # invokenative 2     # printint(i)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printbool__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # b
+B7 00 03 # invokenative 3     # printbool(b)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printchar__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # c
+B7 00 04 # invokenative 4     # printchar(c)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<flush__1>
+01                # number of arguments = 1
+01                # number of local variables = 1
+00 0A             # code length = 10 bytes
+B7 00 05 # invokenative 5     # flush()
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<eof__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 08             # code length = 8 bytes
+B7 00 06 # invokenative 6     # eof()
+36 01    # vstore 1           # _result = eof();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<readline__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 20             # code length = 32 bytes
+14 00 00 # aldc 0             # s[0] = "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+B8 00 07 # invokestatic 7     # eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")
+10 01    # bipush 1           # 
+82       # ixor               # !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"))
+14 00 37 # aldc 55            # s[55] = "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+15 00    # vload 0            # _caller
+14 00 7D # aldc 125           # s[125] = ": caller location"
+B7 00 07 # invokenative 7     # string_join(_caller, ": caller location")
+B7 00 07 # invokenative 7     # string_join("/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n", string_join(_caller, ": caller location"))
+CF       # assert             # assert !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")) [failure message on stack]
+B7 00 08 # invokenative 8     # readline()
+36 01    # vstore 1           # _result = readline();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<square>
+02                # number of arguments = 2
+03                # number of local variables = 3
+00 0A             # code length = 10 bytes
+15 00    # vload 0            # x
+15 00    # vload 0            # x
+68       # imul               # (x * x)
+36 02    # vstore 2           # _result = (x * x);
+15 02    # vload 2            # _result
+B0       # return             # 
+
+
+#<negate>
+02                # number of arguments = 2
+03                # number of local variables = 3
+00 0A             # code length = 10 bytes
+10 00    # bipush 0           # 
+15 00    # vload 0            # x
+64       # isub               # -(x)
+36 02    # vstore 2           # _result = -(x);
+15 02    # vload 2            # _result
+B0       # return             # 
+
+
+#<map>
+04                # number of arguments = 4
+05                # number of local variables = 5
+00 36             # code length = 54 bytes
+10 00    # bipush 0           # 0
+36 04    # vstore 4           # i = 0;
+# <00:loop>
+A7 00 03 # goto +3            # goto <01:body>
+# <01:body>
+15 04    # vload 4            # i
+15 01    # vload 1            # n
+A1 00 06 # if_icmplt +6       # if (i < n) goto <03:then>
+A7 00 1F # goto +31           # goto <04:else>
+# <03:then>
+15 00    # vload 0            # A
+15 04    # vload 4            # i
+63       # aadds              # &A[i]
+15 00    # vload 0            # A
+15 04    # vload 4            # i
+63       # aadds              # &A[i]
+2E       # imload             # A[i]
+14 00 8F # aldc 143           # s[143] = "map (real_map.c1: 11.16-11.26)"
+15 02    # vload 2            # f
+B6       # invokedynamic      # (*(f))(A[i], "map (real_map.c1: 11.16-11.26)")
+4E       # imstore            # A[i] = (*(f))(A[i], "map (real_map.c1: 11.16-11.26)");
+15 04    # vload 4            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 04    # vstore 4           # i += 1;
+A7 00 06 # goto +6            # goto <05:endif>
+# <04:else>
+A7 00 06 # goto +6            # break
+# <05:endif>
+A7 FF D4 # goto -44           # goto <00:loop>
+# <02:exit>
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+00 09             # native count
+# native pool
+00 01 00 06       # print
+00 01 00 0A       # println
+00 01 00 09       # printint
+00 01 00 07       # printbool
+00 01 00 08       # printchar
+00 00 00 05       # flush
+00 00 00 04       # eof
+00 02 00 64       # string_join
+00 00 00 0B       # readline
+

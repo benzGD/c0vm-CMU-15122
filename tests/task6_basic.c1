@@ -1,0 +1,19 @@
+// Define the function type signature
+typedef int int_op(int x);
+
+// Define a matching function
+int add_one(int x) {
+    return x + 1;
+}
+
+int main() {
+    // Assign function to variable (C0 treats function names as pointers)
+    int_op* f =  &add_one;
+    
+    // Invoke the function pointer
+    // This triggers INVOKEDYNAMIC
+    int result = (*f)(10);
+    
+    // Expected result: 11
+    return result;
+}

@@ -1,0 +1,263 @@
+C0 C0 FF EE       # magic number
+00 17             # version 11, arch = 1 (64 bits)
+
+00 00             # int pool count
+# int pool
+
+01 6C             # string pool total size
+# string pool
+72 65 61 64 6C 69 6E 65 5F 5F 31 20 28 2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 31 36 2D 31 34 2E 32 31 29 00  # "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+2F 75 73 72 2F 73 68 61 72 65 2F 63 63 30 2F 6C 69 62 2F 63 6F 6E 69 6F 2E 68 30 3A 20 31 34 2E 36 2D 31 34 2E 32 32 3A 20 40 72 65 71 75 69 72 65 73 20 61 6E 6E 6F 74 61 74 69 6F 6E 20 66 61 69 6C 65 64 0A 00  # "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+3A 20 63 61 6C 6C 65 72 20 6C 6F 63 61 74 69 6F 6E 00  # ": caller location"
+66 69 62 5F 6D 65 6D 6F 20 28 72 65 61 6C 5F 66 69 62 2E 63 30 3A 20 37 2E 31 35 2D 37 2E 33 36 29 00  # "fib_memo (real_fib.c0: 7.15-7.36)"
+66 69 62 5F 6D 65 6D 6F 20 28 72 65 61 6C 5F 66 69 62 2E 63 30 3A 20 37 2E 33 39 2D 37 2E 36 30 29 00  # "fib_memo (real_fib.c0: 7.39-7.60)"
+28 70 72 6F 67 72 61 6D 20 73 74 61 72 74 29 00  # "(program start)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 66 69 62 2E 63 30 3A 20 31 37 2E 31 38 2D 31 37 2E 33 35 29 00  # "main (real_fib.c0: 17.18-17.35)"
+46 69 62 28 33 30 29 20 3D 20 00  # "Fib(30) = "
+6D 61 69 6E 20 28 72 65 61 6C 5F 66 69 62 2E 63 30 3A 20 31 39 2E 35 2D 31 39 2E 32 34 29 00  # "main (real_fib.c0: 19.5-19.24)"
+6D 61 69 6E 20 28 72 65 61 6C 5F 66 69 62 2E 63 30 3A 20 32 30 2E 35 2D 32 30 2E 32 31 29 00  # "main (real_fib.c0: 20.5-20.21)"
+00  # ""
+6D 61 69 6E 20 28 72 65 61 6C 5F 66 69 62 2E 63 30 3A 20 32 31 2E 35 2D 32 31 2E 31 36 29 00  # "main (real_fib.c0: 21.5-21.16)"
+
+00 0A             # function count
+# function_pool
+
+#<main>
+00                # number of arguments = 0
+05                # number of local variables = 5
+00 6B             # code length = 107 bytes
+14 00 D3 # aldc 211           # s[211] = "(program start)"
+36 00    # vstore 0           # _caller = "(program start)";
+10 1E    # bipush 30          # 30
+36 02    # vstore 2           # n = 30;
+15 02    # vload 2            # n
+10 01    # bipush 1           # 1
+60       # iadd               # (n + 1)
+BC 04    # newarray 4         # alloc_array(int, (n + 1))
+36 03    # vstore 3           # memo = alloc_array(int, (n + 1));
+10 00    # bipush 0           # 0
+36 04    # vstore 4           # i = 0;
+# <06:loop>
+A7 00 03 # goto +3            # goto <07:body>
+# <07:body>
+15 04    # vload 4            # i
+15 02    # vload 2            # n
+A4 00 06 # if_icmple +6       # if (i <= n) goto <09:then>
+A7 00 15 # goto +21           # goto <10:else>
+# <09:then>
+15 03    # vload 3            # memo
+15 04    # vload 4            # i
+63       # aadds              # &memo[i]
+10 FF    # bipush -1          # -1
+4E       # imstore            # memo[i] = -(1);
+15 04    # vload 4            # i
+10 01    # bipush 1           # 1
+60       # iadd               # 
+36 04    # vstore 4           # i += 1;
+A7 00 06 # goto +6            # goto <11:endif>
+# <10:else>
+A7 00 06 # goto +6            # break
+# <11:endif>
+A7 FF DE # goto -34           # goto <06:loop>
+# <08:exit>
+15 02    # vload 2            # n
+15 03    # vload 3            # memo
+14 00 E3 # aldc 227           # s[227] = "main (real_fib.c0: 17.18-17.35)"
+B8 00 09 # invokestatic 9     # fib_memo(n, memo, "main (real_fib.c0: 17.18-17.35)")
+36 04    # vstore 4           # result = fib_memo(n, memo, "main (real_fib.c0: 17.18-17.35)");
+14 01 03 # aldc 259           # s[259] = "Fib(30) = "
+14 01 0E # aldc 270           # s[270] = "main (real_fib.c0: 19.5-19.24)"
+B8 00 01 # invokestatic 1     # print__1("Fib(30) = ", "main (real_fib.c0: 19.5-19.24)")
+57       # pop                # (ignore result)
+15 04    # vload 4            # result
+14 01 2D # aldc 301           # s[301] = "main (real_fib.c0: 20.5-20.21)"
+B8 00 03 # invokestatic 3     # printint__1(result, "main (real_fib.c0: 20.5-20.21)")
+57       # pop                # (ignore result)
+14 01 4C # aldc 332           # s[332] = ""
+14 01 4D # aldc 333           # s[333] = "main (real_fib.c0: 21.5-21.16)"
+B8 00 02 # invokestatic 2     # println__1("", "main (real_fib.c0: 21.5-21.16)")
+57       # pop                # (ignore result)
+10 00    # bipush 0           # 0
+36 01    # vstore 1           # _result = 0;
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<print__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 00 # invokenative 0     # print(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<println__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # s
+B7 00 01 # invokenative 1     # println(s)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printint__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # i
+B7 00 02 # invokenative 2     # printint(i)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printbool__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # b
+B7 00 03 # invokenative 3     # printbool(b)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<printchar__1>
+02                # number of arguments = 2
+02                # number of local variables = 2
+00 0C             # code length = 12 bytes
+15 00    # vload 0            # c
+B7 00 04 # invokenative 4     # printchar(c)
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<flush__1>
+01                # number of arguments = 1
+01                # number of local variables = 1
+00 0A             # code length = 10 bytes
+B7 00 05 # invokenative 5     # flush()
+57       # pop                # (ignore result)
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+10 00    # bipush 0           # dummy return value
+B0       # return             # 
+
+
+#<eof__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 08             # code length = 8 bytes
+B7 00 06 # invokenative 6     # eof()
+36 01    # vstore 1           # _result = eof();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<readline__1>
+01                # number of arguments = 1
+02                # number of local variables = 2
+00 20             # code length = 32 bytes
+14 00 00 # aldc 0             # s[0] = "readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"
+B8 00 07 # invokestatic 7     # eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")
+10 01    # bipush 1           # 
+82       # ixor               # !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)"))
+14 00 37 # aldc 55            # s[55] = "/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n"
+15 00    # vload 0            # _caller
+14 00 7D # aldc 125           # s[125] = ": caller location"
+B7 00 07 # invokenative 7     # string_join(_caller, ": caller location")
+B7 00 07 # invokenative 7     # string_join("/usr/share/cc0/lib/conio.h0: 14.6-14.22: @requires annotation failed\n", string_join(_caller, ": caller location"))
+CF       # assert             # assert !(eof__1("readline__1 (/usr/share/cc0/lib/conio.h0: 14.16-14.21)")) [failure message on stack]
+B7 00 08 # invokenative 8     # readline()
+36 01    # vstore 1           # _result = readline();
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<fib_memo>
+03                # number of arguments = 3
+04                # number of local variables = 4
+00 5C             # code length = 92 bytes
+15 00    # vload 0            # n
+10 01    # bipush 1           # 1
+A4 00 06 # if_icmple +6       # if (n <= 1) goto <00:then>
+A7 00 0D # goto +13           # goto <01:else>
+# <00:then>
+15 00    # vload 0            # n
+36 03    # vstore 3           # _result = n;
+15 03    # vload 3            # _result
+B0       # return             # 
+A7 00 03 # goto +3            # goto <02:endif>
+# <01:else>
+# <02:endif>
+15 01    # vload 1            # memo
+15 00    # vload 0            # n
+63       # aadds              # &memo[n]
+2E       # imload             # memo[n]
+10 FF    # bipush -1          # -1
+A0 00 06 # if_cmpne +6        # if (memo[n] != -(1)) goto <03:then>
+A7 00 11 # goto +17           # goto <04:else>
+# <03:then>
+15 01    # vload 1            # memo
+15 00    # vload 0            # n
+63       # aadds              # &memo[n]
+2E       # imload             # memo[n]
+36 03    # vstore 3           # _result = memo[n];
+15 03    # vload 3            # _result
+B0       # return             # 
+A7 00 03 # goto +3            # goto <05:endif>
+# <04:else>
+# <05:endif>
+15 01    # vload 1            # memo
+15 00    # vload 0            # n
+63       # aadds              # &memo[n]
+15 00    # vload 0            # n
+10 01    # bipush 1           # 1
+64       # isub               # (n - 1)
+15 01    # vload 1            # memo
+14 00 8F # aldc 143           # s[143] = "fib_memo (real_fib.c0: 7.15-7.36)"
+B8 00 09 # invokestatic 9     # fib_memo((n - 1), memo, "fib_memo (real_fib.c0: 7.15-7.36)")
+15 00    # vload 0            # n
+10 02    # bipush 2           # 2
+64       # isub               # (n - 2)
+15 01    # vload 1            # memo
+14 00 B1 # aldc 177           # s[177] = "fib_memo (real_fib.c0: 7.39-7.60)"
+B8 00 09 # invokestatic 9     # fib_memo((n - 2), memo, "fib_memo (real_fib.c0: 7.39-7.60)")
+60       # iadd               # (fib_memo((n - 1), memo, "fib_memo (real_fib.c0: 7.15-7.36)") + fib_memo((n - 2), memo, "fib_memo (real_fib.c0: 7.39-7.60)"))
+4E       # imstore            # memo[n] = (fib_memo((n - 1), memo, "fib_memo (real_fib.c0: 7.15-7.36)") + fib_memo((n - 2), memo, "fib_memo (real_fib.c0: 7.39-7.60)"));
+15 01    # vload 1            # memo
+15 00    # vload 0            # n
+63       # aadds              # &memo[n]
+2E       # imload             # memo[n]
+36 03    # vstore 3           # _result = memo[n];
+15 03    # vload 3            # _result
+B0       # return             # 
+
+00 09             # native count
+# native pool
+00 01 00 06       # print
+00 01 00 0A       # println
+00 01 00 09       # printint
+00 01 00 07       # printbool
+00 01 00 08       # printchar
+00 00 00 05       # flush
+00 00 00 04       # eof
+00 02 00 64       # string_join
+00 00 00 0B       # readline
+

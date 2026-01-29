@@ -1,0 +1,82 @@
+C0 C0 FF EE       # magic number
+00 17             # version 11, arch = 1 (64 bits)
+
+00 00             # int pool count
+# int pool
+
+00 72             # string pool total size
+# string pool
+61 70 70 6C 79 20 28 74 61 73 6B 36 5F 61 72 67 2E 63 31 3A 20 38 2E 31 32 2D 38 2E 32 33 29 00  # "apply (task6_arg.c1: 8.12-8.23)"
+28 70 72 6F 67 72 61 6D 20 73 74 61 72 74 29 00  # "(program start)"
+6D 61 69 6E 20 28 74 61 73 6B 36 5F 61 72 67 2E 63 31 3A 20 31 33 2E 31 36 2D 31 33 2E 33 34 29 00  # "main (task6_arg.c1: 13.16-13.34)"
+6D 61 69 6E 20 28 74 61 73 6B 36 5F 61 72 67 2E 63 31 3A 20 31 36 2E 31 36 2D 31 36 2E 33 34 29 00  # "main (task6_arg.c1: 16.16-16.34)"
+
+00 04             # function count
+# function_pool
+
+#<main>
+00                # number of arguments = 0
+04                # number of local variables = 4
+00 2D             # code length = 45 bytes
+14 00 20 # aldc 32            # s[32] = "(program start)"
+36 00    # vstore 0           # _caller = "(program start)";
+16 00 01 # addrof_static 1    # &add
+10 0A    # bipush 10          # 10
+10 05    # bipush 5           # 5
+14 00 30 # aldc 48            # s[48] = "main (task6_arg.c1: 13.16-13.34)"
+B8 00 03 # invokestatic 3     # apply(&add, 10, 5, "main (task6_arg.c1: 13.16-13.34)")
+36 02    # vstore 2           # res1 = apply(&add, 10, 5, "main (task6_arg.c1: 13.16-13.34)");
+16 00 02 # addrof_static 2    # &sub
+10 0A    # bipush 10          # 10
+10 05    # bipush 5           # 5
+14 00 51 # aldc 81            # s[81] = "main (task6_arg.c1: 16.16-16.34)"
+B8 00 03 # invokestatic 3     # apply(&sub, 10, 5, "main (task6_arg.c1: 16.16-16.34)")
+36 03    # vstore 3           # res2 = apply(&sub, 10, 5, "main (task6_arg.c1: 16.16-16.34)");
+15 02    # vload 2            # res1
+15 03    # vload 3            # res2
+60       # iadd               # (res1 + res2)
+36 01    # vstore 1           # _result = (res1 + res2);
+15 01    # vload 1            # _result
+B0       # return             # 
+
+
+#<add>
+03                # number of arguments = 3
+04                # number of local variables = 4
+00 0A             # code length = 10 bytes
+15 00    # vload 0            # a
+15 01    # vload 1            # b
+60       # iadd               # (a + b)
+36 03    # vstore 3           # _result = (a + b);
+15 03    # vload 3            # _result
+B0       # return             # 
+
+
+#<sub>
+03                # number of arguments = 3
+04                # number of local variables = 4
+00 0A             # code length = 10 bytes
+15 00    # vload 0            # a
+15 01    # vload 1            # b
+64       # isub               # (a - b)
+36 03    # vstore 3           # _result = (a - b);
+15 03    # vload 3            # _result
+B0       # return             # 
+
+
+#<apply>
+04                # number of arguments = 4
+05                # number of local variables = 5
+00 0F             # code length = 15 bytes
+15 01    # vload 1            # x
+15 02    # vload 2            # y
+14 00 00 # aldc 0             # s[0] = "apply (task6_arg.c1: 8.12-8.23)"
+15 00    # vload 0            # op
+B6       # invokedynamic      # (*(op))(x, y, "apply (task6_arg.c1: 8.12-8.23)")
+36 04    # vstore 4           # _result = (*(op))(x, y, "apply (task6_arg.c1: 8.12-8.23)");
+15 04    # vload 4            # _result
+B0       # return             # 
+
+00 00             # native count
+# native pool
+

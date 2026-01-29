@@ -1,0 +1,23 @@
+#use <conio>
+
+int fib_memo(int n, int[] memo) {
+    if (n <= 1) return n;
+    if (memo[n] != -1) return memo[n]; // Cache hit
+    
+    memo[n] = fib_memo(n - 1, memo) + fib_memo(n - 2, memo);
+    return memo[n];
+}
+
+int main() {
+    int n = 30; // 30th Fib number is 832040
+    int[] memo = alloc_array(int, n + 1);
+    
+    for (int i = 0; i <= n; i++) memo[i] = -1; // Init with -1
+    
+    int result = fib_memo(n, memo);
+    
+    print("Fib(30) = ");
+    printint(result);
+    println("");
+    return 0;
+}
