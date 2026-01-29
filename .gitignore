@@ -1,0 +1,7 @@
+/*
+!/.gitignore
+!/c0vm
+!/c0vm.c
+!/tests
+!/c0vm/**
+!/tests/**
